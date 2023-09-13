@@ -1,0 +1,99 @@
+:root {
+    ---black: #3c3836;
+    --red: #cc241d;
+    --yellow: #d79921;
+    --blue: #458588;
+    --green: #8ec07c;
+
+    --font-color: #444;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    font-size: 62.5%;
+}
+
+body,
+html {
+    height: 100%;
+}
+
+body {
+    font-size: 2rem;
+}
+
+.container {
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--blue);
+}
+
+.calculator {
+    background-color: var(---black);
+    /* height: 60rem; */
+    /* width: 40rem; */
+    padding: 3rem;
+    border-radius: 9px;
+    box-shadow: 8px 8px 16px rgba(0, 0, 0, 0.5);
+}
+
+.display {
+    background-color: #474340;
+    background-color: var(--green);
+    text-align: end;
+    padding: 3rem;
+    margin-bottom: 3rem;
+    border-radius: 9px;
+    border: solid 3px black;
+}
+
+/* 4 columns 5 rows */
+.buttons {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1rem;
+}
+
+.btn {
+    border: none;
+    padding: 2rem 2.6rem;
+    border-radius: 100rem;
+    background-color: #a19a97;
+    transition: all 0.15s ease-out;
+}
+
+.btn:hover {
+    transform: translateY(-0.4rem);
+}
+
+.btn:active {
+    transform: translateY(0);
+}
+
+.btn--number:hover {
+    background-color: var(--yellow);
+}
+
+.btn--operator:hover {
+    background-color: var(--blue);
+}
+
+.btn--clear:hover,
+.btn--delete:hover {
+    background-color: var(--red);
+}
+
+.btn--clear {
+    grid-column: 1 / span 2;
+}
+
+.btn--delete {
+    grid-column: 3 / span 2;
+}
