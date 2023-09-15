@@ -64,6 +64,20 @@ function updateNum(num, addedValue) {
   }
 }
 
+// Adding event listeners on operator buttons
+operatorButtons.forEach((button) => {
+  button.addEventListener("click", (e) => {
+    processClickedOperator(e);
+    updateDisplay();
+  });
+});
+
+function processClickedOperator(e) {
+  if (firstNum !== "") {
+    operator = e.target.textContent;
+  }
+}
+
 function updateDisplay() {
   console.log(operator);
   let displayStr = firstNum + operator + secondNum;
