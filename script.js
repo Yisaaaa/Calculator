@@ -21,6 +21,13 @@ function divide(a, b) {
   return a / b;
 }
 
+const operators = {
+  "+": add,
+  "-": subtract,
+  multiply: multiply,
+  divide: divide,
+};
+
 //---------------------------|
 // // BUTTONS              --|
 //---------------------------|
@@ -29,6 +36,7 @@ const display = document.querySelector(".display");
 const numberButtons = document.querySelectorAll(".btn--number");
 const operatorButtons = document.querySelectorAll(".btn--operator");
 const equalsButton = document.querySelector(".btn--equals");
+const decimalButton = document.querySelector(".btn--decimal");
 
 // First we set three variables -- firstNum,  operator, secondNum
 let firstNum = "";
@@ -68,18 +76,84 @@ function updateNum(num, addedValue) {
 operatorButtons.forEach((button) => {
   button.addEventListener("click", (e) => {
     processClickedOperator(e);
-    updateDisplay();
   });
 });
 
 function processClickedOperator(e) {
   if (firstNum !== "") {
     operator = e.target.textContent;
+    updateDisplay();
   }
 }
 
+// Adding event listeners on decimal button
+decimalButton.addEventListener("click", (e) => {
+  processClickedDecimal(e);
+});
+
+function processClickedDecimal(e) {
+  if (!checkIfCanDecimal()) {
+    console.log("wrong");
+    return;
+  } else if (operator) {
+    updateNum("secondNum", e.target.textContent);
+  } else {
+    updateNum("firstNum", e.target.textContent);
+  }
+  updateDisplay();
+}
+
+function checkIfCanDecimal() {
+  if (firstNum !== "" && !firstNum.includes(".")) {
+    return true;
+  } else if (operator && secondNum !== "" && !secondNum.includes(".")) {
+    return true;
+  }
+  return false;
+}
+
+// Adding event listeners on equals button
+equalsButton.addEventListener("click", (e) => {
+  if (operator === "" || secondNum === "") {
+    return;
+  }
+  operate(operator, firstNum, secondNum);
+  updateDisplay();
+});
+
+function operate(operator, num1, num2) {
+  if (num1.includes(".") && num2.includes(".")) {
+    num1 = parseFloat(num1);
+    num2 = parseFloat(num2);
+  } else if (num1.includes(".")) {
+    num1 = parseFloat(num1);
+    num2 = parseInt(num2);
+  } else if (num2.includes(".")) {
+    num2 = parseFloat(num2);
+    num1 = parseInt(num1);
+  } else {
+    num1 = parseInt(num1);
+    num2 = parseInt(num2);
+  }
+  result = operators[operator](num1, num2);
+  // firstNum = result.toFixed(2).toString();
+  if (isFloat(result)) {
+    result = result.toFixed(2).toString();
+  }
+  firstNum = result;
+  reset();
+}
+
+function reset() {
+  operator = "";
+  secondNum = "";
+}
+
+function isFloat(num) {
+  return num % 1 !== 0;
+}
+
 function updateDisplay() {
-  console.log(operator);
   let displayStr = firstNum + operator + secondNum;
   display.textContent = displayStr;
 }
