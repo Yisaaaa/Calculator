@@ -37,11 +37,19 @@ const numberButtons = document.querySelectorAll(".btn--number");
 const operatorButtons = document.querySelectorAll(".btn--operator");
 const equalsButton = document.querySelector(".btn--equals");
 const decimalButton = document.querySelector(".btn--decimal");
+const clearButton = document.querySelector(".btn--clear");
 
 // First we set three variables -- firstNum,  operator, secondNum
-let firstNum = "";
+let firstNum = "0";
 let operator = "";
 let secondNum = "";
+
+// Adding event listeners on clear button
+clearButton.addEventListener("click", (e) => {
+  firstNum = "0";
+  operator = "";
+  secondNum = "";
+});
 
 // Adding event listeners on number buttons
 numberButtons.forEach((button) => {
@@ -66,9 +74,15 @@ function processClickedNumber(e) {
 
 function updateNum(num, addedValue) {
   if (num === "firstNum") {
-    firstNum += addedValue;
+    if (firstNum === "0" && addedValue !== ".") {
+      firstNum = addedValue;
+    } else {
+      firstNum += addedValue;
+    }
   } else {
-    secondNum += addedValue;
+    if (secondNum === "0" && addedValue !== ".") {
+      secondNum = addedValue;
+    } else secondNum += addedValue;
   }
 }
 
@@ -80,10 +94,14 @@ operatorButtons.forEach((button) => {
 });
 
 function processClickedOperator(e) {
-  if (firstNum !== "" && !operator) {
+  if (firstNum !== "0" && !operator) {
+    console.log(firstNum);
+    console.log("fisrt");
     operator = e.target.textContent;
     updateDisplay();
   } else if (operator && secondNum !== "") {
+    console.log("sec");
+
     operate(operator, firstNum, secondNum);
     operator = e.target.textContent;
     updateDisplay();
@@ -108,7 +126,7 @@ function processClickedDecimal(e) {
 }
 
 function checkIfCanDecimal() {
-  if (firstNum !== "" && !firstNum.includes(".")) {
+  if (!firstNum.includes(".")) {
     return true;
   } else if (operator && secondNum !== "" && !secondNum.includes(".")) {
     return true;
