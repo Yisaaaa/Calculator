@@ -63,3 +63,9 @@ function updateNum(num, addedValue) {
     secondNum += addedValue;
   }
 }
+
+function updateDisplay() {
+  console.log(operator);
+  let displayStr = firstNum + operator + secondNum;
+  display.textContent = displayStr;
+}
