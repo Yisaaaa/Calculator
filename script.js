@@ -24,8 +24,8 @@ function divide(a, b) {
 const operators = {
   "+": add,
   "-": subtract,
-  multiply: multiply,
-  divide: divide,
+  "×": multiply,
+  "÷": divide,
 };
 
 //---------------------------|
@@ -80,7 +80,11 @@ operatorButtons.forEach((button) => {
 });
 
 function processClickedOperator(e) {
-  if (firstNum !== "") {
+  if (firstNum !== "" && !operator) {
+    operator = e.target.textContent;
+    updateDisplay();
+  } else if (operator && secondNum !== "") {
+    operate(operator, firstNum, secondNum);
     operator = e.target.textContent;
     updateDisplay();
   }
@@ -138,9 +142,9 @@ function operate(operator, num1, num2) {
   result = operators[operator](num1, num2);
   // firstNum = result.toFixed(2).toString();
   if (isFloat(result)) {
-    result = result.toFixed(2).toString();
+    result = result.toFixed(2);
   }
-  firstNum = result;
+  firstNum = result.toString();
   reset();
 }
 
