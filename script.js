@@ -49,6 +49,7 @@ clearButton.addEventListener("click", (e) => {
   firstNum = "0";
   operator = "";
   secondNum = "";
+  updateDisplay();
 });
 
 // Adding event listeners on number buttons
