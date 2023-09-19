@@ -38,6 +38,7 @@ const operatorButtons = document.querySelectorAll(".btn--operator");
 const equalsButton = document.querySelector(".btn--equals");
 const decimalButton = document.querySelector(".btn--decimal");
 const clearButton = document.querySelector(".btn--clear");
+const deleteButton = document.querySelector(".btn--delete");
 
 // First we set three variables -- firstNum,  operator, secondNum
 let firstNum = "0";
@@ -51,6 +52,24 @@ clearButton.addEventListener("click", (e) => {
   secondNum = "";
   updateDisplay();
 });
+
+// Adding event listener on delete button
+deleteButton.addEventListener("click", processDelete);
+
+function processDelete() {
+  // Check what we are deleting
+  console.log(firstNum, secondNum, operator);
+  if (firstNum === "0") {
+    return;
+  } else if (secondNum) {
+    secondNum = secondNum.slice(0, -1);
+  } else if (operator) {
+    operator = "";
+  } else {
+    firstNum = firstNum.slice(0, -1);
+  }
+  updateDisplay();
+}
 
 // Adding event listeners on number buttons
 numberButtons.forEach((button) => {
@@ -177,6 +196,9 @@ function isFloat(num) {
 }
 
 function updateDisplay() {
+  if (firstNum === "") {
+    firstNum = "0";
+  }
   let displayStr = firstNum + operator + secondNum;
   display.textContent = displayStr;
 }
